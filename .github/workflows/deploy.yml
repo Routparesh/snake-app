@@ -1,0 +1,67 @@
+name: Build & Deploy with Notification
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/snakeapp:latest .
+
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/snakeapp:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: self-hosted
+    steps:
+      - name: Pull and run Docker container
+        run: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/snakeapp:latest
+          docker stop snakeapp || true && docker rm snakeapp || true
+          docker run -d --name snakeapp -p 80:80 ${{ secrets.DOCKER_USERNAME }}/snakeapp:latest
+
+      - name: Wait for app to start
+        run: sleep 10
+
+      - name: Validate application
+        id: validate
+        run: |
+          if curl -s --fail http://localhost; then
+            echo "App is running" 
+            echo "status=success" >> $GITHUB_OUTPUT
+          else
+            echo "App validation failed"
+            echo "status=failure" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+  notify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Send deployment status email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.EMAIL_SERVER }}
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: 'Deployment Status - ${{ needs.deploy.result }}'
+          body: |
+            Deployment has completed with status: ${{ needs.deploy.result }}.
+            Repository: ${{ github.repository }}
+            Commit: ${{ github.sha }}
+          to: ${{ secrets.EMAIL_TO }}
+          from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
