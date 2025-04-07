@@ -36,12 +36,12 @@ jobs:
           docker run -d --name snakeapp -p 8080:5000 ${{ secrets.DOCKER_USERNAME }}/snakeapp:latest
 
       - name: Wait for App to Start
-        run: sleep 10
+        run: sleep 30
 
       - name: Validate Application
         id: validate
         run: |
-          if curl -s --fail http://localhost:5000; then
+          if curl -s --fail http://localhost:8080; then
             echo "App is running" 
             echo "status=success" >> $GITHUB_OUTPUT
           else
