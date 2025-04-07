@@ -1,0 +1,447 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.mobile-game-container {
+    touch-action: manipulation;
+    -webkit-overflow-scrolling: touch;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.game-info div {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.score {
+    color: #2980b9;
+}
+
+.high-score {
+    color: #8e44ad;
+}
+
+.speed {
+    color: #e67e22;
+}
+
+.mobile-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.control-btn {
+    width: 60px;
+    height: 60px;
+    margin: 0 15px;
+    font-size: 24px;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    transition: all 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+#upBtn {
+    background-color: #2ecc71;
+}
+
+#downBtn {
+    background-color: #e74c3c;
+}
+
+#leftBtn {
+    background-color: #3498db;
+}
+
+#rightBtn {
+    background-color: #f39c12;
+}
+
+.control-btn:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.3), transparent);
+    pointer-events: none;
+}
+
+.control-btn:active,
+.control-btn.active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    filter: brightness(0.9);
+}
+
+.control-btn.touch-release {
+    transition: all 0.2s ease-out;
+}
+
+canvas {
+    border: 2px solid #333;
+    background-color: #222;
+    margin-bottom: 15px;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+.controls button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#muteBtn {
+    width: 44px;
+    padding: 10px 12px;
+    background-color: #7f8c8d;
+}
+
+#muteBtn.muted {
+    background-color: #e74c3c;
+}
+
+.controls button:hover {
+    background-color: #45a049;
+}
+
+#muteBtn:hover {
+    background-color: #95a5a6;
+}
+
+#muteBtn.muted:hover {
+    background-color: #c0392b;
+}
+
+#resetBtn {
+    background-color: #f44336;
+}
+
+#resetBtn:hover {
+    background-color: #d32f2f;
+}
+
+.difficulty-selector {
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.difficulty-selector label {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.difficulty-selector input[type="radio"] {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.difficulty-info {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #e74c3c;
+    font-style: italic;
+}
+
+.instructions {
+    text-align: left;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+}
+
+.instructions h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.instructions p {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+        max-width: 100%;
+    }
+    
+    canvas {
+        width: 100%;
+        max-width: 350px;
+        height: auto;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .game-info div {
+        margin-bottom: 5px;
+    }
+    
+    .controls button {
+        padding: 8px 15px;
+        font-size: 14px;
+        margin: 5px;
+    }
+    
+    .difficulty-selector label {
+        display: block;
+        margin: 5px 0;
+    }
+    
+    .mobile-controls {
+        margin: 10px 0;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 400px) {
+    canvas {
+        max-width: 300px;
+    }
+}
+
+/* For extra small screens */
+@media (max-width: 350px) {
+    .control-btn {
+        width: 50px;
+        height: 50px;
+        margin: 0 10px;
+        font-size: 20px;
+    }
+}
+
+/* Hide mobile controls on desktop */
+@media (min-width: 1025px) {
+    .mobile-controls {
+        display: none;
+    }
+}
+
+/* Display score, high score, and speed status in a row on mobile devices */
+@media (max-width: 768px) {
+    /* Compact game container for mobile */
+    .container {
+        padding: 5px;
+        max-width: 100%;
+    }
+    
+    h1 {
+        margin: 5px 0;
+        font-size: 22px;
+    }
+    
+    .game-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+    
+    .game-info > div {
+        margin: 0 3px;
+        text-align: center;
+        font-size: 12px;
+    }
+    
+    canvas {
+        margin: 5px auto;
+    }
+    
+    .mobile-controls {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto auto auto;
+        grid-template-areas:
+            "up up"
+            "left right"
+            "down down";
+        gap: 8px;
+        margin: 8px auto;
+        max-width: 220px;
+        padding: 0;
+    }
+    
+    #upBtn { 
+        grid-area: up;
+        margin: 0 auto;
+        width: 65px;
+    }
+    
+    #leftBtn { 
+        grid-area: left;
+        margin-left: auto;
+        width: 65px;
+    }
+    
+    #rightBtn { 
+        grid-area: right;
+        margin-right: auto;
+        width: 65px;
+    }
+    
+    #downBtn { 
+        grid-area: down;
+        margin: 0 auto;
+        width: 65px;
+    }
+    
+    .mobile-controls .control-btn {
+        height: 55px;
+        font-size: 22px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s ease;
+    }
+    
+    .mobile-controls .control-btn:active {
+        transform: scale(0.95);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    .controls {
+        margin: 8px 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .controls button {
+        padding: 6px 12px;
+        margin: 0 2px 5px;
+        font-size: 13px;
+        min-width: 0;
+    }
+    
+    #muteBtn {
+        width: 38px;
+        padding: 6px 8px;
+    }
+    
+    .difficulty-selector {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 8px 0;
+        font-size: 13px;
+    }
+    
+    .difficulty-selector .difficulty-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .difficulty-selector span {
+        margin-right: 10px;
+        text-align: right;
+        flex-shrink: 0;
+    }
+    
+    .difficulty-selector .radio-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .difficulty-selector label {
+        display: inline-flex;
+        align-items: center;
+        margin: 0 8px;
+    }
+    
+    .difficulty-selector input[type="radio"] {
+        margin-right: 4px;
+    }
+    
+    .difficulty-info {
+        text-align: center;
+        font-size: 12px;
+        margin: 5px 0;
+        max-width: 300px;
+        width: 100%;
+    }
+    
+    .instructions {
+        margin-top: 5px;
+        font-size: 12px;
+    }
+    
+    .instructions h2 {
+        font-size: 16px;
+        margin-bottom: 3px;
+    }
+    
+    .instructions p {
+        margin: 3px 0;
+    }
+}

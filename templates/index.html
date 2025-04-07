@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container mobile-game-container">
+        <h1>Snake Game</h1>
+        <div class="game-info">
+            <div class="score">Score: <span id="score">0</span></div>
+            <div class="high-score">High Score: <span id="highScore">0</span></div>
+            <div class="speed">Speed: <span id="speedStatus">160</span> ms</div>
+        </div>
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div class="mobile-controls">
+            <button id="leftBtn" class="control-btn"><i class="fas fa-arrow-left"></i></button>
+            <button id="upBtn" class="control-btn"><i class="fas fa-arrow-up"></i></button>
+            <button id="downBtn" class="control-btn"><i class="fas fa-arrow-down"></i></button>
+            <button id="rightBtn" class="control-btn"><i class="fas fa-arrow-right"></i></button>
+        </div>
+        <div class="controls">
+            <button id="startBtn">Start Game</button>
+            <button id="resetBtn">Reset Game</button>
+            <button id="muteBtn"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="difficulty-selector">
+            <div class="difficulty-controls">
+                <span>Difficulty:</span>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="difficulty" value="easy" checked> Easy
+                    </label>
+                    <label>
+                        <input type="radio" name="difficulty" value="hard"> Hard
+                    </label>
+                </div>
+            </div>
+            <p class="difficulty-info">Hard mode: The food will move around!</p>
+        </div>
+        <div class="instructions">
+            <h2>How to Play</h2>
+            <p>Use arrow keys or on-screen buttons to control the snake.</p>
+            <p>Collect food to grow and increase your score!</p>
+            <p>Choose difficulty: Easy (stationary food) or Hard (moving food)</p>
+        </div>
+        
+        <!-- Audio elements for sound effects -->
+        <audio id="moveSound" preload="auto">
+            <source src="{{ url_for('static', filename='sounds/move.mp3') }}" type="audio/mpeg">
+        </audio>
+        <audio id="eatSound" preload="auto">
+            <source src="{{ url_for('static', filename='sounds/eat.mp3') }}" type="audio/mpeg">
+        </audio>
+        <audio id="gameOverSound" preload="auto">
+            <source src="{{ url_for('static', filename='sounds/gameover.mp3') }}" type="audio/mpeg">
+        </audio>
+        <audio id="buttonSound" preload="auto">
+            <source src="{{ url_for('static', filename='sounds/button.mp3') }}" type="audio/mpeg">
+        </audio>
+    </div>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>
