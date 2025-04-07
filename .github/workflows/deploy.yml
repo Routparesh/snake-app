@@ -33,7 +33,7 @@ jobs:
         run: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/snakeapp:latest
           docker stop snakeapp || true && docker rm snakeapp || true
-          docker run -d --name snakeapp -p 80:5000 ${{ secrets.DOCKER_USERNAME }}/snakeapp:latest
+          docker run -d --name snakeapp -p 8080:5000 ${{ secrets.DOCKER_USERNAME }}/snakeapp:latest
 
       - name: Wait for App to Start
         run: sleep 10
